@@ -1,16 +1,9 @@
 import type { ReactElement } from "react";
-import { MainLayout } from "../src/components/MainLayout";
-import { Main } from '../src/components/Main';
-
-import styles from "../styles/Home.module.css";
+import { MainLayout } from "../src/components/Layout/MainLayout";
+import { Main } from "../src/components/Main";
 
 export default function HomePage() {
-
-  return (
-    <div className={styles.container}>
-      <Main />
-    </div>
-  );
+  return <Main />;
 }
 
 HomePage.getLayout = function getLayout(page: ReactElement) {
