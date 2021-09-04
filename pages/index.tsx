@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { MainLayout } from "../src/components/Layout/MainLayout";
+import { Layout } from "../src/components/Layout";
 import { Main } from "../src/components/Main";
 
 export default function HomePage() {
@@ -7,5 +7,5 @@ export default function HomePage() {
 }
 
 HomePage.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return <Layout requireAuth={true}>{page}</Layout>;
 };

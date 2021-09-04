@@ -21,20 +21,10 @@ export const Main: React.VFC = () => {
       </div>
     );
   }
-  if (user) {
-    return (
-      <div>
-        <p>Current User: {user.email}</p>
-        <button onClick={() => signOut()}>ログアウト</button>
-      </div>
-    );
-  }
   return (
-    <div className="App">
-      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button onClick={() => signInWithEmailAndPassword(email, password)}>Login</button>
-      <button onClick={() => signUpWithEmailAndPassword(email, password)}>Register</button>
+    <div>
+      <p>Current User: {user?.email}</p>
+      <button onClick={() => signOut()}>ログアウト</button>
     </div>
   );
 };
