@@ -1,4 +1,4 @@
-import { useMemo, useCallback, useReducer } from 'react';
+import { useMemo, useCallback, useReducer } from "react";
 
 // 参考 https://github.com/CSFrequency/react-firebase-hooks/blob/master/util/useLoadingValue.ts
 
@@ -17,9 +17,9 @@ type ReducerState<E> = {
   value?: any;
 };
 
-type ErrorAction<E> = { type: 'error'; error: E };
-type ResetAction = { type: 'reset'; defaultValue?: any };
-type ValueAction = { type: 'value'; value: any };
+type ErrorAction<E> = { type: "error"; error: E };
+type ResetAction = { type: "reset"; defaultValue?: any };
+type ValueAction = { type: "value"; value: any };
 type ReducerAction<E> = ErrorAction<E> | ResetAction | ValueAction;
 
 const defaultState = (defaultValue?: any) => {
@@ -29,50 +29,46 @@ const defaultState = (defaultValue?: any) => {
   };
 };
 
-const reducer = <E>() => (
-  state: ReducerState<E>,
-  action: ReducerAction<E>
-): ReducerState<E> => {
-  switch (action.type) {
-    case 'error':
-      return {
-        ...state,
-        error: action.error,
-        loading: false,
-        value: undefined,
-      };
-    case 'reset':
-      return defaultState(action.defaultValue);
-    case 'value':
-      return {
-        ...state,
-        error: undefined,
-        loading: false,
-        value: action.value,
-      };
-    default:
-      return state;
-  }
-};
+const reducer =
+  <E>() =>
+  (state: ReducerState<E>, action: ReducerAction<E>): ReducerState<E> => {
+    switch (action.type) {
+      case "error":
+        return {
+          ...state,
+          error: action.error,
+          loading: false,
+          value: undefined,
+        };
+      case "reset":
+        return defaultState(action.defaultValue);
+      case "value":
+        return {
+          ...state,
+          error: undefined,
+          loading: false,
+          value: action.value,
+        };
+      default:
+        return state;
+    }
+  };
 
 export const useLoadingValue = <T, E>(getDefaultValue?: () => T): LoadingValue<T, E> => {
   const defaultValue = getDefaultValue ? getDefaultValue() : undefined;
-  const [state, dispatch] = useReducer(
-    reducer<E>(),
-    defaultState(defaultValue)
-  );
+  const [state, dispatch] = useReducer(reducer<E>(), defaultState(defaultValue));
 
   const reset = useCallback(() => {
     const defaultValue = getDefaultValue ? getDefaultValue() : undefined;
-    dispatch({ type: 'reset', defaultValue });
-  }, [getDefaultValue])
+    dispatch({ type: "reset", defaultValue });
+  }, [getDefaultValue]);
 
   const setError = useCallback((error: E) => {
-    dispatch({ type: 'error', error });
+    dispatch({ type: "error", error });
   }, []);
 
   const setValue = useCallback((value?: T) => {
-    dispatch({ type: 'value', value });
+    dispatch({ type: "value", value });
   }, []);
 
   return useMemo(
@@ -86,4 +82,4 @@ export const useLoadingValue = <T, E>(getDefaultValue?: () => T): LoadingValue<T
     }),
     [state.error, state.loading, reset, setError, setValue, state.value]
   );
-}
+};
